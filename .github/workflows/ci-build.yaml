@@ -1,0 +1,27 @@
+name: CI Docker Build
+
+on:
+  push:
+    branches:
+      - nothing
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    # Étape obligatoire : récupérer le code du repo
+      - name: Checkout repository 
+        uses: actions/checkout@v3
+      #Se connecter a docker hub avec les credentials secrets
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      #Construire l'image Docker
+      - name: Build image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/devops-static-website:latest .
+      
+      #Pousser l'image sur docker hub
+      - name: Push image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/devops-static-website:latest
