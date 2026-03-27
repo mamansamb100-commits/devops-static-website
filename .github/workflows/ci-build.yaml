@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest 
     steps:
     # Étape obligatoire : récupérer le code du repo
-      - name: Checkout repository 
+      - name: Checkout repository  
         uses: actions/checkout@v3
       #Se connecter a docker hub avec les credentials secrets
       - name: Login to Docker Hub
